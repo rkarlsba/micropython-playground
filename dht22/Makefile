@@ -1,3 +1,4 @@
+# wee test
 PORT=/dev/ttyUSB0
 SPEED=115200
 
