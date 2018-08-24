@@ -1,10 +1,12 @@
-while True:
-    cl, addr = s.accept()
-    print('client connected from', addr)
-    cl_file = cl.makefile('rwb', 0)
-    while True:
-        line = "t:", sensor.measure(), "h:", sensor.measure()
-    rows = ['<tr><td>%s</td><td>%d</td></tr>' % (str(p), p.value()) for p in pins]
-    response = html % '\n'.join(rows)
-    cl.send(response)
-    cl.close()
+addr = socket.getaddrinfo('0.0.0.0', 5050)[0][-1]
+s = socket.socket()
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+except socket.error, msg:
+    sys.stderr.write("[ERROR] %s\n" % msg[1])
+    sys.exit(1)
+
+s.bind(addr)
+s.listen(1)
+print('listening on', addr)

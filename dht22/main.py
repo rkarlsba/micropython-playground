@@ -108,15 +108,13 @@ s.bind(addr)
 s.listen(1)
 print('listening on', addr)
 
+
 while True:
     cl, addr = s.accept()
     print('client connected from', addr)
     cl_file = cl.makefile('rwb', 0)
-    while True:
-        line = cl_file.readline()
-        if not line or line == b'\r\n':
-            break
-    rows = ['<tr><td>%s</td><td>%d</td></tr>' % (str(p), p.value()) for p in pins]
-    response = html % '\n'.join(rows)
-    cl.send(response)
+    line = "t:", sensor.measure(), "h:", sensor.measure()
+    print('sending output "', line, '"');
+    cl.send(line)
     cl.close()
+
