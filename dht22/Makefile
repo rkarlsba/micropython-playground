@@ -8,3 +8,4 @@ all:
 install:
 	ampy --port $(PORT) --baud $(SPEED) put dht22.py
 	ampy --port $(PORT) --baud $(SPEED) put main.py
+	ampy --port $(PORT) --baud $(SPEED) put socket.py
