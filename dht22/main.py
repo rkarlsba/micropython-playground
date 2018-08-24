@@ -104,10 +104,16 @@ if isconnected == 0:
 
 addr = socket.getaddrinfo('0.0.0.0', 5050)[0][-1]
 s = socket.socket()
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+except socket.error as msg:
+    sys.stderr.write("[ERROR] %s\n" % msg[1])
+    sys.exit(1)
+
 s.bind(addr)
 s.listen(1)
 print('listening on', addr)
-
 
 while True:
     cl, addr = s.accept()
