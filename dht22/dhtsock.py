@@ -13,7 +13,7 @@ ap_if.active(False)
 
 sta_if.connect(wifi_ssid, wifi_password)
 
-isconnnected=0
+isconnected=0
 
 for attempt in range(10):
     if sta_if.isconnected():
