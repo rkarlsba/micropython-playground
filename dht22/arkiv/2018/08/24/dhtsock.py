@@ -7,8 +7,8 @@ import time
 def temphumsrv():
     machine.freq(160000000)
 
-    wifi_ssid='roysittnett'
-    wifi_password='ikkeveldighemmelig'
+    wifi_ssid='secredssid'
+    wifi_password='asdf'
 
     sta_if = network.WLAN(network.STA_IF)
     sta_if.active(True)

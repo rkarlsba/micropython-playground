@@ -18,8 +18,8 @@ gc.collect()
 
 # mine ting
 dhtpin = 5
-ssid = 'roysittnett'
-password = 'ikkeveldighemmelig'
+ssid = 'secredssid'
+password = 'asdf'
 port = 4949
 listen_addr = '0.0.0.0'
 
