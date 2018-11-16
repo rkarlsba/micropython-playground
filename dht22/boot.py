@@ -6,7 +6,7 @@ import network
 import os
 import time
 import socket
-import ssid-local
+from ssid_local import ssid,password
 
 # standardgreier
 import esp
@@ -20,10 +20,9 @@ gc.collect()
 dhtpin = 5
 ledpin_r = 4
 ledpin_g = 0
-ledpin_b = 2
+ledpin_b = 14
+ledpin_o = 2 # onboard - invertert(?)
 
-#ssid = 'asdf'
-#password = ''
 port = 4949
 listen_addr = '0.0.0.0'
 
@@ -36,8 +35,15 @@ sensor=dht.DHT22(machine.Pin(dhtpin))
 
 # og LEDs
 led_r = machine.Pin(ledpin_r, machine.Pin.OUT)
+led_g = machine.Pin(ledpin_g, machine.Pin.OUT)
 led_b = machine.Pin(ledpin_b, machine.Pin.OUT)
-led_b = machine.Pin(ledpin_b, machine.Pin.OUT)
+led_o = machine.Pin(ledpin_o, machine.Pin.OUT)
+
+# Alt av
+led_r.off()
+led_g.off()
+led_b.off()
+led_o.on()
 
 def df():
     fs_stat = os.statvfs("/")
