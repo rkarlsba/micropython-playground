@@ -1,4 +1,4 @@
-# vim:ts=4:sw=4:sts=4:et:ai
+# vim:ts=4:sw=4:sts=4:et:ai:fdm=marker
 
 import machine
 import dht
@@ -60,10 +60,11 @@ def tempfukt():
     print(dhttemp())
     print(dhtfukt())
 
-addr = socket.getaddrinfo(listen_addr, port)[0][-1]
-sock = socket.socket()
-sock.bind(addr)
-sock.listen(1)
-print('Listening on', addr)
-
+# ikke her {{{
+# addr = socket.getaddrinfo(listen_addr, port)[0][-1]
+# sock = socket.socket()
+# sock.bind(addr)
+# sock.listen(1)
+# print('Listening on', addr)
+# }}}
 tempfukt()

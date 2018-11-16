@@ -13,6 +13,9 @@ dbname = 'temphumtcp.sqlite3'
 tablename = "temphum"
 sock_port = 4949
 sock_addr = '0.0.0.0'
+import ssid-local
+#ssid = 'asdf'
+#password = ''
 
 # db setup
 conn = sqlite3.connect(dbname)
