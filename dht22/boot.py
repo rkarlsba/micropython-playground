@@ -52,13 +52,13 @@ def dhtmeasure():
 def dhttemp():
     return sensor.temperature()
 
-def dhtfukt():
+def dhthum():
     return sensor.humidity()
 
-def tempfukt():
+def temphum():
     dhtmeasure()
     print(dhttemp())
-    print(dhtfukt())
+    print(dhthum())
 
 # ikke her {{{
 # addr = socket.getaddrinfo(listen_addr, port)[0][-1]
@@ -67,4 +67,4 @@ def tempfukt():
 # sock.listen(1)
 # print('Listening on', addr)
 # }}}
-tempfukt()
+temphum()
