@@ -3,10 +3,10 @@
 import machine
 import dht
 import network
-# from network import WLAN
 import os
 import time
 import socket
+import ssid-local
 
 # standardgreier
 import esp
@@ -16,10 +16,14 @@ import gc
 #webrepl.start()
 gc.collect()
 
-# mine ting
+# pinner
 dhtpin = 5
-ssid = 'secredssid'
-password = 'asdf'
+ledpin_r = 4
+ledpin_g = 0
+ledpin_b = 2
+
+#ssid = 'asdf'
+#password = ''
 port = 4949
 listen_addr = '0.0.0.0'
 
@@ -29,6 +33,11 @@ sta_if.active(True)
 ap_if.active(False)
 
 sensor=dht.DHT22(machine.Pin(dhtpin))
+
+# og LEDs
+led_r = machine.Pin(ledpin_r, machine.Pin.OUT)
+led_b = machine.Pin(ledpin_b, machine.Pin.OUT)
+led_b = machine.Pin(ledpin_b, machine.Pin.OUT)
 
 def df():
     fs_stat = os.statvfs("/")
