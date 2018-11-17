@@ -7,6 +7,7 @@ import os
 import time
 import socket
 from ssid_local import ssid,password
+from globals_local import *
 
 # standardgreier
 import esp
@@ -16,33 +17,28 @@ import gc
 #webrepl.start()
 gc.collect()
 
-# pinner
-dhtpin = 5
-ledpin_r = 4
-ledpin_g = 0
-ledpin_b = 14
-ledpin_o = 2 # onboard - invertert(?)
+if (use_networking):
+    sta_if = network.WLAN(network.STA_IF)
+    ap_if = network.WLAN(network.AP_IF)
+    sta_if.active(True)
+    ap_if.active(False)
 
-port = 4949
-listen_addr = '0.0.0.0'
-
-sta_if = network.WLAN(network.STA_IF)
-ap_if = network.WLAN(network.AP_IF)
-sta_if.active(True)
-ap_if.active(False)
-
-sensor=dht.DHT22(machine.Pin(dhtpin))
+sensor=dht.DHT22(machine.Pin(pin_dht))
 
 # og LEDs
-led_r = machine.Pin(ledpin_r, machine.Pin.OUT)
-led_g = machine.Pin(ledpin_g, machine.Pin.OUT)
-led_b = machine.Pin(ledpin_b, machine.Pin.OUT)
-led_o = machine.Pin(ledpin_o, machine.Pin.OUT)
+# RGB-led ikke i bruk for øyeblikket {{{
+#led_r = machine.Pin(pin_led_r, machine.Pin.OUT)
+#led_g = machine.Pin(pin_led_g, machine.Pin.OUT)
+#led_b = machine.Pin(pin_led_b, machine.Pin.OUT)
+# }}}
+led_o = machine.Pin(pin_led_o, machine.Pin.OUT)
 
 # Alt av
-led_r.off()
-led_g.off()
-led_b.off()
+# RGB-led ikke i bruk for øyeblikket {{{
+#led_r.off()
+#led_g.off()
+#led_b.off()
+# }}}
 led_o.on()
 
 def df():
