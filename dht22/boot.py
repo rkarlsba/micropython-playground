@@ -32,6 +32,7 @@ sensor=dht.DHT22(machine.Pin(pin_dht))
 #led_b = machine.Pin(pin_led_b, machine.Pin.OUT)
 # }}}
 led_o = machine.Pin(pin_led_o, machine.Pin.OUT)
+i2c = machine.I2C(-1, scl=machine.Pin(pin_scl), sda=machine.Pin(pin_sda), freq=i2c_freq)
 
 # Alt av
 # RGB-led ikke i bruk for øyeblikket {{{
