@@ -2,16 +2,18 @@
 
 import machine
 import dht
+import ssd1306
 import network
 import os
 import time
+import schedule
 import socket
 from ssid_local import ssid,password
 from globals_local import *
 
 # standardgreier
 import esp
-esp.osdebug(0)
+esp.osdebug(1)
 import gc
 #import webrepl
 #webrepl.start()
@@ -32,15 +34,17 @@ sensor=dht.DHT22(machine.Pin(pin_dht))
 #led_b = machine.Pin(pin_led_b, machine.Pin.OUT)
 # }}}
 led_o = machine.Pin(pin_led_o, machine.Pin.OUT)
-i2c = machine.I2C(-1, scl=machine.Pin(pin_scl), sda=machine.Pin(pin_sda), freq=i2c_freq)
-
-# Alt av
 # RGB-led ikke i bruk for øyeblikket {{{
 #led_r.off()
 #led_g.off()
 #led_b.off()
 # }}}
 led_o.on()
+
+# Skjerm
+i2c = machine.I2C(-1, scl=machine.Pin(pin_scl), sda=machine.Pin(pin_sda), freq=i2c_freq)
+# i2c = machine.I2C(-1, machine.Pin(5), machine.Pin(4))
+oled = ssd1306.SSD1306_I2C(128, 32, i2c)
 
 def df():
     fs_stat = os.statvfs("/")
@@ -58,7 +62,7 @@ df()
 
 def dhtmeasure():
     sensor.measure()
-    time.sleep(0.5)
+    time.sleep(0.2)
     sensor.measure()
 
 def dhttemp():
@@ -72,6 +76,18 @@ def temphum():
     print(dhttemp())
     print(dhthum())
 
+def display_temphum():
+    temp = str(dhttemp()) 
+    hum = str(dhthum()) 
+    oled.fill(0) 
+    oled.text("Temp: " + temp, 0, 2) 
+    oled.text("Hum:  " + hum, 0, 12) 
+    oled.show()
+
+def update_and_display_temphum():
+    dhtmeasure()
+    display_temphum()
+
 # ikke her {{{
 # addr = socket.getaddrinfo(listen_addr, port)[0][-1]
 # sock = socket.socket()
@@ -80,3 +96,16 @@ def temphum():
 # print('Listening on', addr)
 # }}}
 temphum()
+display_temphum()
+
+# Loop
+schedule.every(5).seconds.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
+# while 1:
+#     dhtmeasure()
+#     display_temphum()
+#     time.sleep(5)
