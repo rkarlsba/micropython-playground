@@ -4,16 +4,17 @@ import machine
 import dht
 import ssd1306
 import network
-import os
+#import schedule
+#import os
 import time
-import schedule
 import socket
+
 from ssid_local import ssid,password
 from globals_local import *
 
 # standardgreier
-import esp
-esp.osdebug(1)
+#import esp
+#esp.osdebug(1)
 import gc
 #import webrepl
 #webrepl.start()
@@ -46,19 +47,19 @@ i2c = machine.I2C(-1, scl=machine.Pin(pin_scl), sda=machine.Pin(pin_sda), freq=i
 # i2c = machine.I2C(-1, machine.Pin(5), machine.Pin(4))
 oled = ssd1306.SSD1306_I2C(128, 32, i2c)
 
-def df():
-    fs_stat = os.statvfs("/")
-    fs_size = fs_stat[0] * fs_stat[2]
-    fs_free = fs_stat[0] * fs_stat[3]
-    print("File System Size {:,} - Free Space {:,}".format(fs_size, fs_free))
+# def df():
+#     fs_stat = os.statvfs("/")
+#     fs_size = fs_stat[0] * fs_stat[2]
+#     fs_free = fs_stat[0] * fs_stat[3]
+#     print("File System Size {:,} - Free Space {:,}".format(fs_size, fs_free))
 
 def init():
     sta_if.connect(ssid, password)
     while not sta_if.isconnected():
         machine.idle() # save power while waiting
 
-print("") # tom linje
-df()
+# print("") # tom linje
+# df()
 
 def dhtmeasure():
     sensor.measure()
@@ -98,12 +99,16 @@ def update_and_display_temphum():
 temphum()
 display_temphum()
 
-# Loop
-schedule.every(5).seconds.do(job)
+schedule.every().minute.do(update_and_display_temphum)
+# schedule.every().hour.do(job)
+# schedule.every().day.at("10:30").do(job)
+# schedule.every(5).to(10).minutes.do(job)
+# schedule.every().monday.do(job)
+# schedule.every().wednesday.at("13:15").do(job)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
 # while 1:
 #     dhtmeasure()
