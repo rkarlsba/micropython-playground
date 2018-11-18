@@ -15,5 +15,10 @@ pin_scl = 5         # D1 - I2C Sync CLock
 #i2c_freq = 400000   # 400kHz?
 i2c_freq = 8000000  # 8MHz?
 
+measure_delay = 5   # Measure every <n> seconds
+
+sta_if = ''
+ap_if = ''
+
 port = 4949
 listen_addr = '0.0.0.0'

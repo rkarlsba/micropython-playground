@@ -1,13 +1,12 @@
 # vim:ts=4:sw=4:sts=4:et:ai:fdm=marker
 
+import gc
 import machine
 import dht
 import ssd1306
-import network
 #import schedule
 #import os
 import time
-import socket
 
 from ssid_local import ssid,password
 from globals_local import *
@@ -15,12 +14,15 @@ from globals_local import *
 # standardgreier
 #import esp
 #esp.osdebug(1)
-import gc
 #import webrepl
 #webrepl.start()
+
+# rydde litt
 gc.collect()
 
 if (use_networking):
+    import network
+    import socket
     sta_if = network.WLAN(network.STA_IF)
     ap_if = network.WLAN(network.AP_IF)
     sta_if.active(True)
@@ -62,6 +64,7 @@ def init():
 # df()
 
 def dhtmeasure():
+    time.sleep(0.2)
     sensor.measure()
     time.sleep(0.2)
     sensor.measure()
@@ -99,7 +102,7 @@ def update_and_display_temphum():
 temphum()
 display_temphum()
 
-schedule.every().minute.do(update_and_display_temphum)
+# schedule.every().minute.do(update_and_display_temphum)
 # schedule.every().hour.do(job)
 # schedule.every().day.at("10:30").do(job)
 # schedule.every(5).to(10).minutes.do(job)
@@ -114,3 +117,10 @@ schedule.every().minute.do(update_and_display_temphum)
 #     dhtmeasure()
 #     display_temphum()
 #     time.sleep(5)
+
+while True:
+    dhtmeasure()
+    display_temphum()
+    temphum()
+    time.sleep(measure_delay)
+
