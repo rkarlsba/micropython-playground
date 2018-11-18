@@ -17,4 +17,4 @@ def no_debug():
 
 
 no_debug()
-connect()
+# connect()
