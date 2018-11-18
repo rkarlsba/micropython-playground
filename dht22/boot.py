@@ -47,7 +47,10 @@ led_o.on()
 # Skjerm
 i2c = machine.I2C(-1, scl=machine.Pin(pin_scl), sda=machine.Pin(pin_sda), freq=i2c_freq)
 # i2c = machine.I2C(-1, machine.Pin(5), machine.Pin(4))
-oled = ssd1306.SSD1306_I2C(128, 32, i2c)
+try:
+    oled = ssd1306.SSD1306_I2C(128, 32, i2c)
+except:
+    print("Failed to open OLED")
 
 # def df():
 #     fs_stat = os.statvfs("/")
