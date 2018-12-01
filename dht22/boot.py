@@ -4,11 +4,8 @@ import gc
 import machine
 import dht
 import ssd1306
-#import schedule
-#import os
 import time
 
-from ssid_local import ssid,password
 from globals_local import *
 
 # standardgreier
@@ -23,6 +20,12 @@ gc.collect()
 if (use_networking):
     import network
     import socket
+    try:
+        from ssid_local import ssid,password
+    except:
+        print("Please create the file ssid_local.py with the variables ssid and password")
+        exit(1)
+
     sta_if = network.WLAN(network.STA_IF)
     ap_if = network.WLAN(network.AP_IF)
     sta_if.active(True)
